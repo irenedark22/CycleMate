@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CycleMate - Log Period</title>
+<style>
+  body, html { margin:0; padding:0; font-family:'Poppins',sans-serif; height:100%; display:flex; justify-content:center; align-items:center; background: linear-gradient(135deg,#ffb6c1,#9370db,#fff);}
+  .container { width:90%; max-width:400px; background:#fff; padding:2rem; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.2); text-align:center;}
+  h1 { font-size:2rem; color:#4B0082; margin-bottom:1.5rem;}
+  input { width:90%; padding:0.7rem; margin:0.5rem 0; border-radius:10px; border:1px solid #ccc; font-size:1rem;}
+  button { width:95%; padding:0.8rem; margin:1rem 0; border:none; border-radius:10px; font-weight:600; cursor:pointer; font-size:1rem; background:linear-gradient(90deg,#ff69b4,#9370db); color:#fff; transition:0.3s;}
+  button:hover { opacity:0.85; }
+  ul { text-align:left; margin-top:1rem; padding-left:20px;}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Log Period</h1>
+  <input type="date" id="startDate" placeholder="Start Date">
+  <input type="date" id="endDate" placeholder="End Date">
+  <button onclick="savePeriod()">Save Period</button>
+  <button onclick="window.location='dashboard.html'">Back to Dashboard</button>
+
+  <h3>Period History</h3>
+  <ul id="periodHistory"></ul>
+</div>
+
+<script>
+// Load user
+let user = JSON.parse(localStorage.getItem('currentUser')) || {name:'User', periods:[]};
+
+// Display existing periods
+function displayPeriods(){
+  const list = document.getElementById('periodHistory');
+  list.innerHTML = '';
+  user.periods.forEach((p,i)=>{
+    list.innerHTML += `<li>Period ${i+1}: ${p.start} to ${p.end}</li>`;
+  });
+}
+displayPeriods();
+
+// Save new period
+function savePeriod(){
+  const start = document.getElementById('startDate').value;
+  const end = document.getElementById('endDate').value;
+  if(!start || !end){ alert("Select both start and end dates"); return; }
+  user.periods.push({start,end});
+  localStorage.setItem('currentUser', JSON.stringify(user));
+  alert("Period saved!");
+  displayPeriods();
+}
+</script>
+
+</body>
+</html>
+

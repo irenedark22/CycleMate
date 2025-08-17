@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CycleMate - Fertility Tracker</title>
+<style>
+  body, html { margin:0; padding:0; font-family:'Poppins',sans-serif; min-height:100%; display:flex; justify-content:center; align-items:center; background: linear-gradient(135deg,#ffb6c1,#9370db,#fff);}
+  .container { width:90%; max-width:400px; background:#fff; padding:2rem; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.2); text-align:center;}
+  h1 { font-size:2rem; color:#4B0082; margin-bottom:1rem;}
+  ul { text-align:left; padding-left:20px;}
+  li { margin:0.5rem 0;}
+  button { width:95%; padding:0.8rem; margin:1rem 0; border:none; border-radius:10px; font-weight:600; cursor:pointer; font-size:1rem; background:linear-gradient(90deg,#ff69b4,#9370db); color:#fff; transition:0.3s;}
+  button:hover { opacity:0.85; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Fertility Tracker</h1>
+  <p>Next 28 days cycle (fertile days highlighted)</p>
+  <ul id="fertilityList"></ul>
+  <button onclick="window.location='dashboard.html'">Back to Dashboard</button>
+</div>
+
+<script>
+// Load user data
+let user = JSON.parse(localStorage.getItem('currentUser')) || {name:'User', periods:[]};
+
+// Calculate next 28 days from last period
+let lastPeriod = user.periods.length ? new Date(user.periods[user.periods.length-1].start) : new Date();
+let fertilityList = document.getElementById('fertilityList');
+
+for(let i=1; i<=28; i++){
+  let day = new Date(lastPeriod);
+  day.setDate(day.getDate() + i);
+  let dayStr = day.toISOString().split('T')[0];
+  
+  // Fertile days approx day 10-16
+  let fertile = (i >=10 && i <=16) ? '🌸 Fertile' : '';
+  
+  // Period days approx first 5 days
+  let period = (i <=5) ? '🩸 Period' : '';
+  
+  fertilityList.innerHTML += `<li>${dayStr} ${period} ${fertile}</li>`;
+}
+</script>
+
+</body>
+</html>
+

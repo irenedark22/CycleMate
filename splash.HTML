@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CycleMate - Splash</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ffb6c1, #9370db, #fff);
+      }
+      .logo-circle {
+        width: 120px;
+        height: 120px;
+        background: linear-gradient(135deg, #ffb6c1, #9370db, #fff);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #4b0082;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="logo-circle">CM</div>
+
+    <div
+      id="countdown"
+      style="
+        position: absolute;
+        bottom: 40px;
+        width: 100%;
+        text-align: center;
+        font-size: 1.5rem;
+        color: #4b0082;
+      "
+    ></div>
+    <script>
+      let seconds = 10;
+      const countdownEl = document.getElementById("countdown");
+      countdownEl.textContent = `Redirecting in ${seconds} seconds...`;
+      const timer = setInterval(() => {
+        seconds--;
+        countdownEl.textContent = `Redirecting in ${seconds} seconds...`;
+        if (seconds === 0) {
+          clearInterval(timer);
+          window.location = "login.html";
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>
